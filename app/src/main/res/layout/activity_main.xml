@@ -11,22 +11,36 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="@dimen/_22sdp"
-        android:paddingBottom="@dimen/_10sdp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:background="@color/white">
 
-        <com.example.pixelstudio.DrawingView
-            android:id="@+id/drawing_view"
+        <FrameLayout
+            android:id="@+id/fl_drawing_view_container"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"/>
+            app:layout_constraintLeft_toLeftOf="parent"
+            >
 
+            <ImageView
+                android:id="@+id/iv_background"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                />
+
+            <com.example.pixelstudio.DrawingView
+                android:id="@+id/drawing_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+
+        </FrameLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <include layout="@layout/layout_misceellaneous" />
