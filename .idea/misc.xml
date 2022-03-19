@@ -5,12 +5,19 @@
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.20185185185185187" />
         <entry key="app/src/main/res/drawable/background_miscellaneous.xml" value="0.2625" />
+        <entry key="app/src/main/res/drawable/background_note_color_1.xml" value="0.189" />
+        <entry key="app/src/main/res/drawable/background_note_color_5.xml" value="0.189" />
+        <entry key="app/src/main/res/drawable/background_note_color_7.xml" value="0.189" />
+        <entry key="app/src/main/res/drawable/ic_done.xml" value="0.245" />
         <entry key="app/src/main/res/drawable/landing_background.xml" value="0.252" />
+        <entry key="app/src/main/res/drawable/large.xml" value="0.189" />
+        <entry key="app/src/main/res/drawable/medium.xml" value="0.189" />
         <entry key="app/src/main/res/drawable/small.xml" value="0.189" />
         <entry key="app/src/main/res/layout/activity_dev.xml" value="0.35833333333333334" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.303125" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.35833333333333334" />
-        <entry key="app/src/main/res/layout/dialog_brush_size.xml" value="0.18072916666666666" />
+        <entry key="app/src/main/res/layout/dialog_brush_size.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/eraser_size.xml" value="0.25416666666666665" />
         <entry key="app/src/main/res/layout/layout_misceellaneous.xml" value="0.35833333333333334" />
       </map>
     </option>

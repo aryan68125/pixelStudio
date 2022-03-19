@@ -5,13 +5,12 @@
     android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#00000000">
-
     <ImageButton
         android:background="#00000000"
-        android:id="@+id/ib_small_brush"
+        android:id="@+id/ib_small_eraser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/brush_small"
+        android:src="@drawable/eraser_small"
         android:layout_marginTop="@dimen/_5sdp"
         android:layout_marginBottom="@dimen/_5sdp"
         android:layout_gravity="center"
@@ -23,11 +22,11 @@
 
     <ImageButton
         android:background="#00000000"
-        android:id="@+id/ib_medium_brush"
+        android:id="@+id/ib_medium_eraser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:src="@drawable/brush_medium"
+        android:src="@drawable/eraser_medium"
         android:layout_marginTop="@dimen/_5sdp"
         android:layout_marginBottom="@dimen/_5sdp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -38,10 +37,10 @@
 
     <ImageButton
         android:background="#00000000"
-        android:id="@+id/ib_large_brush"
+        android:id="@+id/ib_large_eraser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/brush_large"
+        android:src="@drawable/eraser_medium"
         android:layout_marginTop="@dimen/_5sdp"
         android:layout_marginBottom="@dimen/_5sdp"
         android:layout_marginLeft="@dimen/_5sdp"
@@ -52,5 +51,4 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.55" />
-
 </LinearLayout>

@@ -3,8 +3,8 @@
     android:shape="oval"
     android:dither="true">
     <size
-        android:height="@dimen/_10sdp"
-        android:width="@dimen/_10sdp"
+        android:height="@dimen/_30sdp"
+        android:width="@dimen/_30sdp"
         />
     <solid android:color="@color/brush_size_color"
         />

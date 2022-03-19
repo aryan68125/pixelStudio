@@ -149,6 +149,7 @@ class DrawingView(context : Context, attrs: AttributeSet) : View(context, attrs)
         return true
     }
 
+    //This function will set the size of the brush
     fun setSizeForBrush(newSize : Float){
         //assigning the new size of the brush to mBrushSize variable while taking the screen dimension of the device into account
         //COMPLEX_UNIT_DIP allows us to take pixel density of a device into consideration
@@ -156,6 +157,13 @@ class DrawingView(context : Context, attrs: AttributeSet) : View(context, attrs)
         mBrushSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, newSize , resources.displayMetrics)
 
         mDrawPaint!!.strokeWidth = mBrushSize
+    }
+
+    //this function will set the color of the brush after the user selects the color from the menu in the application
+    fun setColor(newColor: String)
+    {
+        color = Color.parseColor(newColor)
+        mDrawPaint!!.color = color
     }
 
     //This CustomPath is going to be nested class

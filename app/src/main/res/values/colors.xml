@@ -11,4 +11,12 @@
     <color name="Dark_grey">#313131</color>
     <color name="landingBackgroundCenter">#DC000000</color>
     <color name="landingBackgroundEnd">#F6000000</color>
+    <color name="brush_size_color">#203239</color>
+    <color name="orange">#F4511E</color>
+    <color name="Blue">#1E88E5</color>
+    <color name="Navy_blue">#3949AB</color>
+    <color name="light_green">#43A047</color>
+    <color name="Dark_green">#415C25</color>
+    <color name="red">#F44336</color>
+    <color name = "yellow">#FDD835</color>
 </resources>
