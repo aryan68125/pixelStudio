@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<path xmlns:android="http://schemas.android.com/apk/res/android">
+
+<!--    In here you the path where the saved images are stored will be defined-->
+    <external-path
+        name = "captured"
+        path = "Android/data/com.example.pixelstudio/files"/>
+
+</path>

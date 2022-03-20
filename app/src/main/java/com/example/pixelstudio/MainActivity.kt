@@ -2,20 +2,39 @@ package com.example.pixelstudio
 
 import android.app.Dialog
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
+import android.os.Environment
+import android.os.Handler
 import android.util.Log
 import android.view.View
+import android.view.Window
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.example.pixelstudio.dev.DevActivity
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
+
 
 class MainActivity : AppCompatActivity() {
 
     private var drawingView : DrawingView? = null
     var selectedBrushColor = ""
     var eraserColor = ""
+
+    //this variable is required by the custom progress dialog when the image is being saved in the storage of this device
+    var customProgressDialog : Dialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +44,7 @@ class MainActivity : AppCompatActivity() {
 
         drawingView = findViewById(R.id.drawing_view)
         drawingView?.setSizeForBrush(2.toFloat())
+
     }
 
     //handelling layout miscellaneous
@@ -182,6 +202,41 @@ class MainActivity : AppCompatActivity() {
                 //call the BrushsizeChooser dailog function that will activate the brush size chooser dialog button when the brush button is pressed
                 showBrushSizeChooserDialog()
             }
+
+        //here undo button is handled
+        layoutMiscellaneous.findViewById<View>(R.id.undo_button)
+            .setOnClickListener { //setting the behaviour of the bottom sheet layout included in this current layout
+
+                //Logic to undo an action in the application
+                //call the function to undo the drawing from the DrawingView file
+                drawingView?.onClickUndo()
+            }
+
+        //here redo button is handled
+        layoutMiscellaneous.findViewById<View>(R.id.redo_button)
+            .setOnClickListener { //setting the behaviour of the bottom sheet layout included in this current layout
+
+                //Logic to undo an action in the application
+                //call the function to undo the drawing from the DrawingView file
+                drawingView?.onClickRedo()
+            }
+
+        //here save button is handled
+//        layoutMiscellaneous.findViewById<View>(R.id.save_button)
+//            .setOnClickListener { //setting the behaviour of the bottom sheet layout included in this current layout
+//
+//                //showing the save dialog box animation to the user
+//                showProgressDialog()
+//
+////                saving the drawn image Logic or Function will come here
+//                lifecycleScope.launch {
+//                    //here we will run the process of saving file
+//                    val flDrawingView : FrameLayout = findViewById(R.id.fl_drawing_view_container)
+//                    saveBitmapFile(getBitmapFromView(flDrawingView))
+//
+//                }
+//
+//            }
     }
 
     //this function handles the functionality of the brush button dialog box
@@ -291,5 +346,83 @@ class MainActivity : AppCompatActivity() {
             }
 
         eraserDialog.show()
+    }
+
+    //This function will convert the drawn image on the screen of this application into a Bitmap OR an image which can be stored in teh device's memory OR internal storage
+    private fun getBitmapFromView(view: View) : Bitmap
+    {
+          //Logic to convert a view into a bitmap
+        val returnedBitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
+        //bind the canvas that is on the view
+        val canvas = Canvas(returnedBitmap)
+        view.draw(canvas)
+        return returnedBitmap
+    }
+
+    //Create a coroutine so that we can run the saving of a file into the background
+    private suspend fun saveBitmapFile(mBitmap : Bitmap?) : String {
+        var result = ""
+        withContext(Dispatchers.IO){
+            if(mBitmap != null){
+                try{
+                    val byte = ByteArrayOutputStream()
+                    mBitmap.compress(Bitmap.CompressFormat.PNG,100, byte)
+
+                    val file_id: Long = System.currentTimeMillis()/1000
+                    val filename = "PixelStudio" + file_id + ".png"
+                    val path = externalCacheDir?.absoluteFile.toString() + File.separator + filename
+
+                    val file = File(path)
+                    val fileOutputStream = FileOutputStream(file)
+                    fileOutputStream.write(byte.toByteArray())
+                    fileOutputStream.close()
+                    result = file.absolutePath
+                    runOnUiThread{
+                        if(result.isNotEmpty()){
+                            Toast.makeText(this@MainActivity, "File saved successfully : $result", Toast.LENGTH_LONG).show()
+                        }
+                        else{
+                            Toast.makeText(this@MainActivity, "Oops!!! Something wen wrong while saving the file", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+                catch(e: Exception){
+                    result = ""
+                    e.printStackTrace()
+                }
+
+            }
+        }
+        return result
+    }
+
+    //this function will handle the progress dialog and show it when the user is saving the file
+    private fun showProgressDialog(){
+        customProgressDialog = Dialog(this@MainActivity)
+
+        customProgressDialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
+
+        //set the screen content of the dialogbox from the custom layout resource file
+        customProgressDialog?.setContentView(R.layout.dialog_cutom_progress)
+
+        val v : View = getWindow().getDecorView();
+        v.setBackgroundResource(android.R.color.transparent)
+
+        //start the dialog box
+        customProgressDialog?.show()
+
+        //running a delay of three seconds in the background
+        lifecycleScope.launch {
+            // we used the postDelayed(Runnable, time) method
+            // to send a message with a delayed time.
+            Handler().postDelayed({
+                //here we will write the code to remove the dialog box from the screen
+                if (customProgressDialog!=null){
+                    customProgressDialog?.dismiss()
+                    customProgressDialog = null
+                }
+            }, 2570) // 3000 is the delayed time in milliseconds.
+        }
+
     }
 }

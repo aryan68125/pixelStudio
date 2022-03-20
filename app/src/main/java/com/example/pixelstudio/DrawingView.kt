@@ -30,10 +30,40 @@ class DrawingView(context : Context, attrs: AttributeSet) : View(context, attrs)
     //we are essentially storing the drawn path by the user into a variable and then redrawing it onto the canvas of the screen
     private val mPaths = ArrayList<CustomPath>()
 
+    //This array list will be required to implement the undo functionality as it is storing the backup of the previous states of the drawing
+    private val mUndoPaths = ArrayList<CustomPath>()
+
     //SETTING UP THE VARIABLES
     init{
         //call the method that will initialize the variables required by this application
         setupDrawing()
+    }
+
+    //here this is a method that will take care of the undoing functionality of the application
+    //so essentially we are going to delete an entry from mPaths and store it inside the mUndoPaths
+    //So that we can later backtrack to the previous state if the user made a mistake during his drawing process
+    fun onClickUndo()
+    {
+        if(mPaths.size > 0)
+        {
+            mUndoPaths.add(mPaths.removeAt(mPaths.size-1))
+        }
+        //we need to call the onDraw method once again so that the previous state of the canvas can be redrawn on the screen
+        //we don't need to call the onDraw manually we just need to call invalidate() method
+        invalidate()
+    }
+
+    //here redo button is handled
+    //essentially all we need to do to redo is we will add the last entry from mUndoPaths to mPaths  and delete the last entry from mUndoPaths
+    fun onClickRedo()
+    {
+        if(mUndoPaths.size > 0)
+        {
+            mPaths.add(mUndoPaths.removeAt(mUndoPaths.size-1))
+        }
+        //we need to call the onDraw method once again so that the previous state of the canvas can be redrawn on the screen
+        //we don't need to call the onDraw manually we just need to call invalidate() method
+        invalidate()
     }
 
     //this function will initialize all the variables that is required by this application

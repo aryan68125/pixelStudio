@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+
 }
 
 android {
@@ -64,4 +65,7 @@ dependencies {
 
     //adding gif support dependency
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.20'
+
+    //Adding the dependecy for lifecycleScope which will allow us to run the application processes in the background
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.5.0-alpha04"
 }
