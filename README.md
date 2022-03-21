@@ -86,4 +86,3 @@ Here are some Previews of this Application->
 ![](app/src/main/res/drawable/five.png)
 ![](app/src/main/res/drawable/six.png)
 ![](app/src/main/res/drawable/seven.png)
-![](app/src/main/res/drawable/eight.png)
