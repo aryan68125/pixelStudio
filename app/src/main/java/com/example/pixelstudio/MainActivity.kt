@@ -373,7 +373,7 @@ class MainActivity : AppCompatActivity() {
     //This function will handle image sharing functionality of the application
     private fun shareImage(result:String){
 
-        // offer to share content
+        // offer to share contents
         MediaScannerConnection.scanFile(
             applicationContext,
             arrayOf(result),
