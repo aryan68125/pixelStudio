@@ -1,13 +1,15 @@
 package com.example.pixelstudio
 
 import android.app.Dialog
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
-import android.graphics.drawable.BitmapDrawable
+import android.media.MediaScannerConnection
+import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
 import android.os.Handler
+import android.provider.MediaStore.AUTHORITY
 import android.util.Log
 import android.view.View
 import android.view.Window
@@ -16,6 +18,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.FileProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.pixelstudio.dev.DevActivity
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -237,6 +240,25 @@ class MainActivity : AppCompatActivity() {
 //                }
 //
 //            }
+
+        //here share button is handled
+        layoutMiscellaneous.findViewById<View>(R.id.share_button)
+            .setOnClickListener { //setting the behaviour of the bottom sheet layout included in this current layout
+                bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+
+                //showing the save dialog box animation to the user
+                showProgressDialog()
+
+                //saving the drawn image Logic or Function will come here
+                lifecycleScope.launch {
+                    //here we will run the process of saving file
+                    val flDrawingView : FrameLayout = findViewById(R.id.fl_drawing_view_container)
+                    saveBitmapFile(getBitmapFromView(flDrawingView))
+
+                }
+
+            }
+
     }
 
     //this function handles the functionality of the brush button dialog box
@@ -348,6 +370,52 @@ class MainActivity : AppCompatActivity() {
         eraserDialog.show()
     }
 
+    //This function will handle image sharing functionality of the application
+    private fun shareImage(result:String){
+//        MediaScannerConnection.scanFile(this, arrayOf(result),null){
+//            path, uri ->
+//            val shareIntent = Intent()
+//            shareIntent.action = Intent.ACTION_SEND
+//            shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
+//            shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+//            shareIntent.type = "image/png"
+//            startActivity(Intent.createChooser(shareIntent,"Share Drawing"))
+//        }
+
+        // offer to share content
+        MediaScannerConnection.scanFile(
+            applicationContext,
+            arrayOf(result),
+            null
+        ) { paths, uri ->
+
+            // Use the FileProvider to get a content URI
+            val requestFile = File(externalCacheDir?.absoluteFile.toString() + File.separator ,paths)
+            val fileUri: Uri? = try {
+                FileProvider.getUriForFile(
+                    applicationContext, "com.example.pixelstudio.fileprovider",
+                    requestFile)
+            } catch (e: IllegalArgumentException) {
+                Log.e("File Selector",
+                    "The selected file can't be shared: $requestFile")
+                null
+            }
+
+
+            val shareIntent = Intent()
+            shareIntent.action = Intent.ACTION_SEND
+            shareIntent.type = "image/png"
+            shareIntent.putExtra(Intent.EXTRA_STREAM, fileUri)
+
+            startActivity(
+                Intent.createChooser(
+                    shareIntent, "Share"
+                )
+            )
+        }
+
+    }
+
     //This function will convert the drawn image on the screen of this application into a Bitmap OR an image which can be stored in teh device's memory OR internal storage
     private fun getBitmapFromView(view: View) : Bitmap
     {
@@ -380,6 +448,9 @@ class MainActivity : AppCompatActivity() {
                     runOnUiThread{
                         if(result.isNotEmpty()){
                             Toast.makeText(this@MainActivity, "File saved successfully : $result", Toast.LENGTH_LONG).show()
+                            //call the share funtion when the image is saved
+                            //result is the absolute file path of the image
+                            shareImage(filename)
                         }
                         else{
                             Toast.makeText(this@MainActivity, "Oops!!! Something wen wrong while saving the file", Toast.LENGTH_SHORT).show()

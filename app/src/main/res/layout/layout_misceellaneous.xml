@@ -118,12 +118,12 @@
             android:layout_weight="1">
 
             <ImageView
-                android:id="@+id/save_button"
+                android:id="@+id/share_button"
                 android:layout_width="@dimen/_35sdp"
                 android:layout_height="@dimen/_35sdp"
                 android:contentDescription="@string/app_name"
                 android:padding="@dimen/_3sdp"
-                android:src="@drawable/save"
+                android:src="@drawable/share"
                 />
 
         </FrameLayout>
