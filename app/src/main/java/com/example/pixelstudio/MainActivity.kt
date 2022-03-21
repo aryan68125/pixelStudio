@@ -372,15 +372,6 @@ class MainActivity : AppCompatActivity() {
 
     //This function will handle image sharing functionality of the application
     private fun shareImage(result:String){
-//        MediaScannerConnection.scanFile(this, arrayOf(result),null){
-//            path, uri ->
-//            val shareIntent = Intent()
-//            shareIntent.action = Intent.ACTION_SEND
-//            shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
-//            shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-//            shareIntent.type = "image/png"
-//            startActivity(Intent.createChooser(shareIntent,"Share Drawing"))
-//        }
 
         // offer to share content
         MediaScannerConnection.scanFile(
