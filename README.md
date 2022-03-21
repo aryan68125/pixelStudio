@@ -1,5 +1,5 @@
 NOTE:-> 
-I hafec a problem while trying to share the drawn image in the application via email, whatsapp, telegram etc
+I had a problem while trying to share the drawn image in the application via email, whatsapp, telegram etc
 This is how I solved it ->
 In xml path file
 ```
