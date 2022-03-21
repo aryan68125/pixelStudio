@@ -77,7 +77,8 @@ Here is the link to the post ->
 https://syntaxfix.com/question/1595/fileprovider-illegalargumentexception-failed-to-find-configured-root
 
 Finally this app is complete ->
-This is a Drawing application which allows the user to draw on a canvas and then share his drawing using social media
+This is a Drawing application which allows the user to draw on a canvas and then share his drawing using social media 
+
 Here are some Previews of this Application->
 ![](app/src/main/res/drawable/one.png)
 ![](app/src/main/res/drawable/two.png)
